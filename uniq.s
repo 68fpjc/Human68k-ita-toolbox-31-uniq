@@ -50,8 +50,8 @@ start:
 		bra.s	start1
 		dc.b	'#HUPAIR',0
 start1:
-		lea	stack_bottom(pc),a7		*  A7 := ƒXƒ^ƒbƒN‚Ì’ê
-		lea	$10(a0),a0			*  A0 : PDBƒAƒhƒŒƒX
+		lea	stack_bottom(pc),a7		*  A7 := ã‚¹ã‚¿ãƒƒã‚¯ã®åº•
+		lea	$10(a0),a0			*  A0 : PDBã‚¢ãƒ‰ãƒ¬ã‚¹
 		move.l	a7,d0
 		sub.l	a0,d0
 		move.l	d0,-(a7)
@@ -61,22 +61,22 @@ start1:
 	*
 		move.l	#-1,stdin
 	*
-	*  ˆø”•À‚ÑŠi”[ƒGƒŠƒA‚ğŠm•Û‚·‚é
+	*  å¼•æ•°ä¸¦ã³æ ¼ç´ã‚¨ãƒªã‚¢ã‚’ç¢ºä¿ã™ã‚‹
 	*
-		lea	1(a2),a0			*  A0 := ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì•¶š—ñ‚Ìæ“ªƒAƒhƒŒƒX
-		bsr	strlen				*  D0.L := ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì•¶š—ñ‚Ì’·‚³
+		lea	1(a2),a0			*  A0 := ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®æ–‡å­—åˆ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
+		bsr	strlen				*  D0.L := ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®æ–‡å­—åˆ—ã®é•·ã•
 		addq.l	#1,d0
 		bsr	malloc
 		bmi	insufficient_memory
 
-		movea.l	d0,a1				*  A1 := ˆø”•À‚ÑŠi”[ƒGƒŠƒA‚Ìæ“ªƒAƒhƒŒƒX
+		movea.l	d0,a1				*  A1 := å¼•æ•°ä¸¦ã³æ ¼ç´ã‚¨ãƒªã‚¢ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 	*
-	*  ˆø”‚ğƒfƒR[ƒh‚µC‰ğß‚·‚é
+	*  å¼•æ•°ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ï¼Œè§£é‡ˆã™ã‚‹
 	*
-		bsr	DecodeHUPAIR			*  ˆø”‚ğƒfƒR[ƒh‚·‚é
-		movea.l	a1,a0				*  A0 : ˆø”ƒ|ƒCƒ“ƒ^
-		move.l	d0,d7				*  D7.L : ˆø”ƒJƒEƒ“ƒ^
-		moveq	#0,d5				*  D5.L : ƒtƒ‰ƒO
+		bsr	DecodeHUPAIR			*  å¼•æ•°ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã™ã‚‹
+		movea.l	a1,a0				*  A0 : å¼•æ•°ãƒã‚¤ãƒ³ã‚¿
+		move.l	d0,d7				*  D7.L : å¼•æ•°ã‚«ã‚¦ãƒ³ã‚¿
+		moveq	#0,d5				*  D5.L : ãƒ•ãƒ©ã‚°
 		clr.l	skip_fields
 		clr.l	skip_chars
 		move.l	#-1,check_chars
@@ -214,7 +214,7 @@ decode_opt_done:
 		bset	#FLAG_d,d5
 opt_ok:
 	*
-	*  “ü—Íƒoƒbƒtƒ@‚ğŠm•Û‚·‚é
+	*  å…¥åŠ›ãƒãƒƒãƒ•ã‚¡ã‚’ç¢ºä¿ã™ã‚‹
 	*
 		move.l	#$00ffffff,d0
 		bsr	malloc
@@ -228,20 +228,20 @@ opt_ok:
 inpbuf_ok:
 		move.l	d0,inpbuf_top
 	*
-	*  •W€“ü—Í‚ğØ‚è‘Ö‚¦‚é
+	*  æ¨™æº–å…¥åŠ›ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
 	*
-		clr.w	-(a7)				*  •W€“ü—Í‚ğ
-		DOS	_DUP				*  •¡»‚µ‚½ƒnƒ“ƒhƒ‹‚©‚ç“ü—Í‚µC
+		clr.w	-(a7)				*  æ¨™æº–å…¥åŠ›ã‚’
+		DOS	_DUP				*  è¤‡è£½ã—ãŸãƒãƒ³ãƒ‰ãƒ«ã‹ã‚‰å…¥åŠ›ã—ï¼Œ
 		addq.l	#2,a7
 		move.l	d0,stdin
 		bmi	move_stdin_done
 
 		clr.w	-(a7)
-		DOS	_CLOSE				*  •W€“ü—Í‚ÍƒNƒ[ƒY‚·‚éD
-		addq.l	#2,a7				*  ‚±‚¤‚µ‚È‚¢‚Æ ^C ‚â ^S ‚ªŒø‚©‚È‚¢
+		DOS	_CLOSE				*  æ¨™æº–å…¥åŠ›ã¯ã‚¯ãƒ­ãƒ¼ã‚ºã™ã‚‹ï¼
+		addq.l	#2,a7				*  ã“ã†ã—ãªã„ã¨ ^C ã‚„ ^S ãŒåŠ¹ã‹ãªã„
 move_stdin_done:
 	*
-	*  “ü—Í‚ğƒI[ƒvƒ“
+	*  å…¥åŠ›ã‚’ã‚ªãƒ¼ãƒ—ãƒ³
 	*
 		tst.l	d7
 		beq	input_stdin
@@ -278,7 +278,7 @@ input_opened:
 
 input_ok:
 	*
-	*  o—Í‚ğƒI[ƒvƒ“
+	*  å‡ºåŠ›ã‚’ã‚ªãƒ¼ãƒ—ãƒ³
 	*
 		tst.l	d7
 		beq	output_stdout
@@ -294,9 +294,9 @@ output_stdout:
 		bra	output_ok
 
 output_file:
-		clr.w	-(a7)				*  ‚Ü‚¸“Ç‚İ‚İƒ‚[ƒh‚Å
-		move.l	a1,-(a7)			*  o—Íæƒtƒ@ƒCƒ‹‚ğ
-		DOS	_OPEN				*  ƒI[ƒvƒ“‚µ‚Ä‚İ‚é
+		clr.w	-(a7)				*  ã¾ãšèª­ã¿è¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã§
+		move.l	a1,-(a7)			*  å‡ºåŠ›å…ˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’
+		DOS	_OPEN				*  ã‚ªãƒ¼ãƒ—ãƒ³ã—ã¦ã¿ã‚‹
 		addq.l	#6,a7
 		move.l	d0,d1
 		bmi	create_output
@@ -307,8 +307,8 @@ output_file:
 		move.w	d1,-(a7)
 		DOS	_CLOSE
 		addq.l	#2,a7
-		tst.w	(a7)+				*  ƒLƒƒƒ‰ƒNƒ^EƒfƒoƒCƒX‚È‚ç‚Î
-		bne	open_output			*  @ƒI[ƒvƒ“‚·‚éiV‹Kì¬‚µ‚È‚¢j
+		tst.w	(a7)+				*  ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ãƒã‚¤ã‚¹ãªã‚‰ã°
+		bne	open_output			*  ã€€ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹ï¼ˆæ–°è¦ä½œæˆã—ãªã„ï¼‰
 create_output:
 		move.w	#CREATE_MODE,-(a7)
 		move.l	a1,-(a7)
@@ -333,7 +333,7 @@ output_opened:
 output_ok:
 		move.l	d0,output_handle
 		move.l	a1,output_name
-		bsr	is_chrdev			*  ƒLƒƒƒ‰ƒNƒ^EƒfƒoƒCƒX‚©H
+		bsr	is_chrdev			*  ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ãƒã‚¤ã‚¹ã‹ï¼Ÿ
 		seq	do_buffering
 		beq	check_output_done		*  -- block device
 
@@ -345,10 +345,10 @@ output_ok:
 		btst	#FLAG_B,d5
 		bne	check_output_done
 
-		bset	#FLAG_C,d5			*  ‰üs‚ğ•ÏŠ·‚·‚é
+		bset	#FLAG_C,d5			*  æ”¹è¡Œã‚’å¤‰æ›ã™ã‚‹
 check_output_done:
 	*
-	*  ƒƒCƒ“ˆ—
+	*  ãƒ¡ã‚¤ãƒ³å‡¦ç†
 	*
 		lea	outbuf(pc),a0
 		move.l	a0,outbuf_ptr
@@ -363,10 +363,10 @@ exit_program:
 		move.l	stdin,d0
 		bmi	exit_program_1
 
-		clr.w	-(a7)				*  •W€“ü—Í‚ğ
-		move.w	d0,-(a7)			*  Œ³‚É
-		DOS	_DUP2				*  –ß‚·D
-		DOS	_CLOSE				*  •¡»‚ÍƒNƒ[ƒY‚·‚éD
+		clr.w	-(a7)				*  æ¨™æº–å…¥åŠ›ã‚’
+		move.w	d0,-(a7)			*  å…ƒã«
+		DOS	_DUP2				*  æˆ»ã™ï¼
+		DOS	_CLOSE				*  è¤‡è£½ã¯ã‚¯ãƒ­ãƒ¼ã‚ºã™ã‚‹ï¼
 		addq.l	#4,a7
 exit_program_1:
 		DOS	_EXIT2
@@ -397,7 +397,7 @@ uniq:
 		sf	terminate_by_ctrld
 		move.l	input_handle,d0
 		bsr	is_chrdev
-		beq	uniq_1				*  -- ƒuƒƒbƒNEƒfƒoƒCƒX
+		beq	uniq_1				*  -- ãƒ–ãƒ­ãƒƒã‚¯ãƒ»ãƒ‡ãƒã‚¤ã‚¹
 
 		btst	#5,d0				*  '0':cooked  '1':raw
 		bne	uniq_1
@@ -417,7 +417,7 @@ uniq_loop1:
 
 		move.l	a4,line1_skip_top
 		move.l	d4,line1_skip_length
-		moveq	#0,d6				*  D6.L : ”½•œcount
+		moveq	#0,d6				*  D6.L : åå¾©count
 uniq_loop2:
 		bsr	getline
 		tst.l	d3
@@ -536,14 +536,14 @@ output_4:
 *      none.
 *
 * RETURN
-*      A3     “ü—Í‚µ‚½s‚Ìæ“ªƒAƒhƒŒƒX
-*      D3.L   “ü—Í‚µ‚½s‚Ì’·‚³
-*      A4     “ü—Í‚µ‚½s‚Ì”äŠrƒAƒhƒŒƒX
-*      D4.L   “ü—Í‚µ‚½s‚Ì”äŠrƒAƒhƒŒƒX‚©‚ç‚Ì’·‚³
+*      A3     å…¥åŠ›ã—ãŸè¡Œã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
+*      D3.L   å…¥åŠ›ã—ãŸè¡Œã®é•·ã•
+*      A4     å…¥åŠ›ã—ãŸè¡Œã®æ¯”è¼ƒã‚¢ãƒ‰ãƒ¬ã‚¹
+*      D4.L   å…¥åŠ›ã—ãŸè¡Œã®æ¯”è¼ƒã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰ã®é•·ã•
 *
 * NOTE
-*      line1_top ‚©‚ç line1_length ‚Ü‚Å‚Ìƒf[ƒ^‚Í•Û‘¶‚³‚ê‚é.
-*      line1_top ‚Æ line1_skip_top ‚ÍˆÚ“®‚·‚é‚±‚Æ‚ª‚ ‚é.
+*      line1_top ã‹ã‚‰ line1_length ã¾ã§ã®ãƒ‡ãƒ¼ã‚¿ã¯ä¿å­˜ã•ã‚Œã‚‹.
+*      line1_top ã¨ line1_skip_top ã¯ç§»å‹•ã™ã‚‹ã“ã¨ãŒã‚ã‚‹.
 *****************************************************************
 getline:
 		moveq	#0,d3
@@ -851,19 +851,19 @@ malloc:
 
 msg_myname:		dc.b	'uniq'
 str_colon:		dc.b	': ',0
-msg_no_memory:		dc.b	'ƒƒ‚ƒŠ‚ª‘«‚è‚Ü‚¹‚ñ',CR,LF,0
-msg_bad_arg:		dc.b	'ˆø”‚ª³‚µ‚­‚ ‚è‚Ü‚¹‚ñ',0
-msg_too_few_args:	dc.b	'ˆø”‚ª‘«‚è‚Ü‚¹‚ñ',0
-msg_too_many_args:	dc.b	'ˆø”‚ª‘½‰ß‚¬‚Ü‚·',0
-msg_create_fail:	dc.b	'ì¬‚Å‚«‚Ü‚¹‚ñ',CR,LF,0
-msg_open_fail:		dc.b	'ƒI[ƒvƒ“‚Å‚«‚Ü‚¹‚ñ',CR,LF,0
-msg_read_fail:		dc.b	'“ü—ÍƒGƒ‰[',CR,LF,0
-msg_write_fail:		dc.b	'o—ÍƒGƒ‰[',CR,LF,0
-msg_stdin:		dc.b	'- •W€“ü—Í -',0
-msg_stdout:		dc.b	'- •W€o—Í -',0
-msg_illegal_option:	dc.b	'•s³‚ÈƒIƒvƒVƒ‡ƒ“ -- ',0
+msg_no_memory:		dc.b	'ãƒ¡ãƒ¢ãƒªãŒè¶³ã‚Šã¾ã›ã‚“',CR,LF,0
+msg_bad_arg:		dc.b	'å¼•æ•°ãŒæ­£ã—ãã‚ã‚Šã¾ã›ã‚“',0
+msg_too_few_args:	dc.b	'å¼•æ•°ãŒè¶³ã‚Šã¾ã›ã‚“',0
+msg_too_many_args:	dc.b	'å¼•æ•°ãŒå¤šéãã¾ã™',0
+msg_create_fail:	dc.b	'ä½œæˆã§ãã¾ã›ã‚“',CR,LF,0
+msg_open_fail:		dc.b	'ã‚ªãƒ¼ãƒ—ãƒ³ã§ãã¾ã›ã‚“',CR,LF,0
+msg_read_fail:		dc.b	'å…¥åŠ›ã‚¨ãƒ©ãƒ¼',CR,LF,0
+msg_write_fail:		dc.b	'å‡ºåŠ›ã‚¨ãƒ©ãƒ¼',CR,LF,0
+msg_stdin:		dc.b	'- æ¨™æº–å…¥åŠ› -',0
+msg_stdout:		dc.b	'- æ¨™æº–å‡ºåŠ› -',0
+msg_illegal_option:	dc.b	'ä¸æ­£ãªã‚ªãƒ—ã‚·ãƒ§ãƒ³ -- ',0
 msg_usage:		dc.b	CR,LF
-	dc.b	'g—p–@:  uniq [-udcSBCZ] [-f <#>] [-s <#>] [-w <#>] [-<#>] [+<#>] [--] [<input> [<output>]] ...',CR,LF,0
+	dc.b	'ä½¿ç”¨æ³•:  uniq [-udcSBCZ] [-f <#>] [-s <#>] [-w <#>] [-<#>] [+<#>] [--] [<input> [<output>]] ...',CR,LF,0
 *****************************************************************
 .bss
 .even
